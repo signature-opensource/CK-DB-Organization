@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CK.DB.Organization", "CK.DB.Organization\CK.DB.Organization.csproj", "{0D919DA2-8C97-44B6-BE7F-B954D0EC9171}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C14D45D-9A3B-48BD-9EE9-FFCB259754FB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
+		NuGet.config = NuGet.config
+		README.md = README.md
+		RepositoryInfo.xml = RepositoryInfo.xml
+		Common\SharedKey.snk = Common\SharedKey.snk
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCakeBuilder", "CodeCakeBuilder\CodeCakeBuilder.csproj", "{A99A0A54-38AC-472D-9157-8034D9D0BBA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5F580058-C960-41BF-88A8-037BF9B08BD3}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\TestHelper.config = Tests\TestHelper.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.DB.Organization.Tests", "Tests\CK.DB.Organization.Tests\CK.DB.Organization.Tests.csproj", "{8F927B43-DFCF-4DBE-B3E4-53BCC5B46DAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D919DA2-8C97-44B6-BE7F-B954D0EC9171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D919DA2-8C97-44B6-BE7F-B954D0EC9171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D919DA2-8C97-44B6-BE7F-B954D0EC9171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D919DA2-8C97-44B6-BE7F-B954D0EC9171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99A0A54-38AC-472D-9157-8034D9D0BBA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99A0A54-38AC-472D-9157-8034D9D0BBA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99A0A54-38AC-472D-9157-8034D9D0BBA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99A0A54-38AC-472D-9157-8034D9D0BBA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F927B43-DFCF-4DBE-B3E4-53BCC5B46DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F927B43-DFCF-4DBE-B3E4-53BCC5B46DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F927B43-DFCF-4DBE-B3E4-53BCC5B46DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F927B43-DFCF-4DBE-B3E4-53BCC5B46DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8F927B43-DFCF-4DBE-B3E4-53BCC5B46DAD} = {5F580058-C960-41BF-88A8-037BF9B08BD3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80C28E6C-5CCA-43F0-9016-C45ACDBD97BB}
+	EndGlobalSection
+EndGlobal

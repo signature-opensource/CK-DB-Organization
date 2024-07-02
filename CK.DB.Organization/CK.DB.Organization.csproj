@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.DB.Workspace" Version="7.0.3--0047-develop" />
+    <PackageReference Include="CK.DB.Workspace" Version="7.0.3--0048-develop" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.sql;**\*.tql" />

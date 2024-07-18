@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using CK.Testing;
 
 namespace CK.DB.Organization.Tests
 {
@@ -18,7 +19,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task Can_create_Organization_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var organizationTable = services.GetRequiredService<OrganizationTable>();
 
             using var ctx = new SqlStandardCallContext( TestHelper.Monitor );
@@ -30,7 +31,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task Not_plateform_administrator_user_cannot_create_organization_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var userTable = services.GetRequiredService<UserTable>();
             var aclTable = services.GetRequiredService<AclTable>();
             var organizationTable = services.GetRequiredService<OrganizationTable>();
@@ -47,7 +48,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task Plateform_administrator_user_can_create_organization_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var userTable = services.GetRequiredService<UserTable>();
             var aclTable = services.GetRequiredService<AclTable>();
             var organizationTable = services.GetRequiredService<OrganizationTable>();
@@ -64,7 +65,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task plug_organization_create_an_organization_with_same_workspace_id_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var workspaceTable = services.GetRequiredService<WorkspaceTable>();
             var organiationTable = services.GetRequiredService<OrganizationTable>();
 
@@ -82,7 +83,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task random_user_cannot_plug_an_organization_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
 
             var userTable = services.GetRequiredService<UserTable>();
             var workspaceTable = services.GetRequiredService<WorkspaceTable>();
@@ -99,7 +100,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task unplug_organization_destroy_organization_but_let_workspace_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var organizationTable = services.GetRequiredService<OrganizationTable>();
 
             using SqlStandardCallContext ctx = new( TestHelper.Monitor );
@@ -117,7 +118,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task plug_organization_is_idempotent_Async()
         {
-            using var service = TestHelper.CreateAutomaticServices();
+            var service = SharedEngine.AutomaticServices;
             var workspaceTable = service.GetRequiredService<WorkspaceTable>();
             var organizationTable = service.GetRequiredService<OrganizationTable>();
 
@@ -136,7 +137,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task unplug_organization_is_idempotent_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var organizationTable = services.GetRequiredService<OrganizationTable>();
 
             using SqlStandardCallContext ctx = new( TestHelper.Monitor );
@@ -154,7 +155,7 @@ namespace CK.DB.Organization.Tests
         [Test]
         public async Task cannot_unplug_organizationId_0_Async()
         {
-            using var services = TestHelper.CreateAutomaticServices();
+            var services = SharedEngine.AutomaticServices;
             var organizationTable = services.GetRequiredService<OrganizationTable>();
 
             using SqlStandardCallContext ctx = new( TestHelper.Monitor );

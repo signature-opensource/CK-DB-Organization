@@ -1,6 +1,5 @@
-namespace CK.DB.Organization.Tests
+namespace CK.DB.Organization.Tests;
+
+public class WorkspaceTests : CK.DB.Workspace.Tests.WorkspaceTests
 {
-    public class WorkspaceTests : CK.DB.Workspace.Tests.WorkspaceTests
-    {
-    }
 }

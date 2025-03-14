@@ -4,7 +4,7 @@ using CK.DB.Acl;
 using CK.DB.Workspace;
 using CK.SqlServer;
 using static CK.Testing.MonitorTestHelper;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
@@ -25,7 +25,7 @@ public class OrganizationTests
         using var ctx = new SqlStandardCallContext( TestHelper.Monitor );
 
         var organizationId = await organizationTable.CreateOrganizationAsync( ctx, 1, NewGuid() );
-        organizationId.Should().BeGreaterThan( 0 );
+        organizationId.ShouldBeGreaterThan( 0 );
     }
 
     [Test]
@@ -41,8 +41,8 @@ public class OrganizationTests
         var userId = await userTable.CreateUserAsync( ctx, 1, NewGuid() );
         await aclTable.AclGrantSetAsync( ctx, 1, 1, userId, "Not plateform administrator", 8 );
 
-        await organizationTable.Invoking( t => t.CreateOrganizationAsync( ctx, userId, NewGuid() ) )
-                               .Should().ThrowAsync<Exception>();
+        await Util.Invokable( () => organizationTable.CreateOrganizationAsync( ctx, userId, NewGuid() ) )
+                               .ShouldThrowAsync<Exception>();
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class OrganizationTests
         await aclTable.AclGrantSetAsync( ctx, 1, 1, userId, "Plateform administrator", 112 );
 
         var organizationId = await organizationTable.CreateOrganizationAsync( ctx, userId, NewGuid() );
-        organizationId.Should().BeGreaterThan( 0 );
+        organizationId.ShouldBeGreaterThan( 0 );
     }
 
     [Test]
@@ -73,11 +73,11 @@ public class OrganizationTests
 
         var workspace = await workspaceTable.CreateWorkspaceAsync( ctx, 1, NewGuid() );
 
-        organiationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", workspace.WorkspaceId ).Should().BeNull();
+        organiationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", workspace.WorkspaceId ).ShouldBeNull();
 
         await organiationTable.PlugOrganizationAsync( ctx, 1, workspace.WorkspaceId );
 
-        organiationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", workspace.WorkspaceId ).Should().Be( 1 );
+        organiationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", workspace.WorkspaceId ).ShouldBe( 1 );
     }
 
     [Test]
@@ -94,7 +94,7 @@ public class OrganizationTests
         var workspace = await workspaceTable.CreateWorkspaceAsync( ctx, 1, NewGuid() );
         int userId = await userTable.CreateUserAsync( ctx, 1, Guid.NewGuid().ToString() );
 
-        await organizationTable.Invoking( t => t.PlugOrganizationAsync( ctx, userId, workspace.WorkspaceId ) ).Should().ThrowAsync<Exception>();
+        await Util.Invokable( () => organizationTable.PlugOrganizationAsync( ctx, userId, workspace.WorkspaceId ) ).ShouldThrowAsync<Exception>();
     }
 
     [Test]
@@ -107,12 +107,12 @@ public class OrganizationTests
 
         int organizationId = await organizationTable.CreateOrganizationAsync( ctx, 1, NewGuid() );
 
-        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tWorkspace where WorkspaceId = @0", organizationId ).Should().Be( 1 );
-        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", organizationId ).Should().Be( 1 );
+        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tWorkspace where WorkspaceId = @0", organizationId ).ShouldBe( 1 );
+        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", organizationId ).ShouldBe( 1 );
 
         await organizationTable.UnplugOrganizationAsync( ctx, 1, organizationId );
-        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tWorkspace where WorkspaceId = @0", organizationId ).Should().Be( 1 );
-        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", organizationId ).Should().BeNull();
+        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tWorkspace where WorkspaceId = @0", organizationId ).ShouldBe( 1 );
+        organizationTable.Database.ExecuteScalar<int?>( "select 1 from CK.tOrganization where OrganizationId = @0", organizationId ).ShouldBeNull();
     }
 
     [Test]
@@ -125,12 +125,12 @@ public class OrganizationTests
         using SqlStandardCallContext ctx = new( TestHelper.Monitor );
 
         var workspace = await workspaceTable.CreateWorkspaceAsync( ctx, 1, NewGuid() );
-        OrganizationExists( workspaceTable, workspace.WorkspaceId ).Should().BeFalse();
+        OrganizationExists( workspaceTable, workspace.WorkspaceId ).ShouldBeFalse();
 
         for( int i = 0; i < 10; i++ )
         {
             await organizationTable.PlugOrganizationAsync( ctx, 1, workspace.WorkspaceId );
-            OrganizationExists( workspaceTable, workspace.WorkspaceId ).Should().BeTrue();
+            OrganizationExists( workspaceTable, workspace.WorkspaceId ).ShouldBeTrue();
         }
     }
 
@@ -143,12 +143,12 @@ public class OrganizationTests
         using SqlStandardCallContext ctx = new( TestHelper.Monitor );
 
         var organizationId = await organizationTable.CreateOrganizationAsync( ctx, 1, NewGuid() );
-        OrganizationExists( organizationTable, organizationId ).Should().BeTrue();
+        OrganizationExists( organizationTable, organizationId ).ShouldBeTrue();
 
         for( int i = 0; i < 10; i++ )
         {
             await organizationTable.UnplugOrganizationAsync( ctx, 1, organizationId );
-            OrganizationExists( organizationTable, organizationId ).Should().BeFalse();
+            OrganizationExists( organizationTable, organizationId ).ShouldBeFalse();
         }
     }
 
@@ -160,8 +160,8 @@ public class OrganizationTests
 
         using SqlStandardCallContext ctx = new( TestHelper.Monitor );
 
-        await organizationTable.Invoking( t => t.UnplugOrganizationAsync( ctx, 1, 0 ) )
-            .Should().ThrowAsync<Exception>();
+        await Util.Invokable( () => organizationTable.UnplugOrganizationAsync( ctx, 1, 0 ) )
+            .ShouldThrowAsync<Exception>();
     }
 
     static string NewGuid() => Guid.NewGuid().ToString();

@@ -3,7 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.DB.Workspace" Version="18.0.0-0.cris-auth.0.ci.11" />
+    <PackageReference Include="CK.DB.Workspace" Version="18.0.0-0.cris-auth" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.sql;**\*.tql" />
